@@ -219,7 +219,7 @@ def main():
     P1, P2, rho, g, h1, h2, v1, x0, x1 = create_input_section()
 
     # Solve button with custom styling
-    solve_button = st.button("Solve for v₂", type="primary")
+    solve_button = st.button("Solusi Numerik", type="primary")
 
     if solve_button:
         # Validate inputs first
