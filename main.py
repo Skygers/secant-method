@@ -32,7 +32,6 @@ def create_equation_section():
     """)
 
 def validate_inputs(P1, P2, rho, g, h1, h2, v1):
-    """Validate input parameters and return explanation if invalid"""
     if rho <= 0:
         return False, "Density must be positive"
     if v1 < 0:
@@ -42,7 +41,6 @@ def validate_inputs(P1, P2, rho, g, h1, h2, v1):
     return True, ""
 
 def suggest_initial_guesses(v1, P1, P2, rho, g, h1, h2):
-    """Suggest reasonable initial guesses based on physics"""
     try:
         v2_analytical = analytical_solution(P1, P2, rho, g, h1, h2, v1)
         return max(0.1, v2_analytical * 0.5), min(v2_analytical * 1.5, 20.0)
@@ -74,39 +72,39 @@ def create_input_section():
         # Point 1 and 2 parameters
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown("#### Point 1 (Known Parameters)")
+            st.markdown("#### Parameters")
             P1 = st.number_input(
-                "Pressure at Point 1 (P₁) [Pa]",
+                "Tekanan pada titik 1 (P₁) [Pa]",
                 value=101325.0,
-                help="Pressure at point 1 in Pascals [Pa]\nExample values:\n- Atmospheric pressure: 101325 Pa\n- 1 bar = 100000 Pa",
+                help="Tekanan pada titik 1 dalam Pascals [Pa]\nContoh:\n- Tekanan Atmosfer: 101325 Pa\n- 1 bar = 100000 Pa",
                 format="%.1f"
             )
             h1 = st.number_input(
-                "Height at Point 1 (h₁) [m]",
+                "Ketinggian pada titik 1 (h₁) [m]",
                 value=0.0,
-                help="Height at point 1 in meters [m]\nMeasured from a reference level",
+                help="Ketinggian pada titik 1 dalam meter [m]",
                 format="%.2f"
             )
             v1 = st.number_input(
                 "Velocity at Point 1 (v₁) [m/s]",
                 value=2.0,
                 min_value=0.0,
-                help="Known velocity at point 1 in meters per second [m/s]\nTypical range: 0.1 - 20 m/s for water flow",
+                help="Kecepatan fluida pada titik 1 dalam mps [m/s]\contoh: 0.1 - 20 m/s untuk aliran air",
                 format="%.2f"
             )
 
         with col2:
-            st.markdown("#### Point 2 (Unknown Velocity)")
+            st.markdown("#### Parameters")
             P2 = st.number_input(
-                "Pressure at Point 2 (P₂) [Pa]",
+                "Tekanan pada titik 2 (P₂) [Pa]",
                 value=101325.0,
-                help="Pressure at point 2 in Pascals [Pa]\nExample values:\n- Atmospheric pressure: 101325 Pa\n- 1 bar = 100000 Pa",
+                help="Tekanan pada titik 2 [Pa]\nContoh:\n- Tekanan atmosfer: 101325 Pa\n- 1 bar = 100000 Pa",
                 format="%.1f"
             )
             h2 = st.number_input(
-                "Height at Point 2 (h₂) [m]",
+                "Ketinggian pada titik 2 (h₂) [m]",
                 value=1.0,
-                help="Height at point 2 in meters [m]\nMeasured from the same reference level as h₁",
+                help="Ketinggian pada titik 2 [m],
                 format="%.2f"
             )
 
@@ -116,34 +114,34 @@ def create_input_section():
     # Numerical method parameters in an expander
     with st.expander("Numerical Method Parameters", expanded=False):
         st.markdown("""
-        The secant method requires two initial guesses for v₂ [m/s]. Good guesses help the method converge faster.
+        Metode secant memerlukan dua tebakan awal untuk v₂ [m/s]. Tebakan yang baik membantu nilai error konvergen lebih cepat..
 
-        **Physics-based suggestions:**
-        - From conservation of energy, v₂ should be similar to v₁
-        - For a contracting pipe, v₂ > v₁
-        - For an expanding pipe, v₂ < v₁
+        **Saran berdasarkan fisika:
 
-        **Recommended ranges:**
-        - For subsonic flows: 0.1 - 20 m/s
-        - Start with values around v₁
-        - Keep guesses reasonably apart
+        -Berdasarkan hukum kekekalan energi, v₂ seharusnya mirip dengan v₁.
+        -Untuk pipa yang menyempit, v₂ > v₁.
+        -Untuk pipa yang melebar, v₂ < v₁.
+        
+        Rentang yang direkomendasikan:
+        -Mulailah dengan nilai yang mendekati v₁.
+        -Pastikan perkiraan memiliki jarak yang cukup masuk akal.
         """)
 
         col1, col2 = st.columns(2)
         with col1:
             x0 = st.number_input(
-                "Initial Guess 1 [m/s]",
+                "Tebakan 1 [m/s]",
                 value=suggested_x0,
                 min_value=0.1,
-                help="First initial guess for v₂ in meters per second [m/s]",
+                help="Tebakan 1 untuk nilai v₂ dalam meters per second [m/s]",
                 format="%.2f"
             )
         with col2:
             x1 = st.number_input(
-                "Initial Guess 2 [m/s]",
+                "Tebakan 2 [m/s]",
                 value=suggested_x1,
                 min_value=0.1,
-                help="Second initial guess for v₂ in meters per second [m/s]",
+                help="Tebakan 2 untuk nilai v₂ dalam meters per second [m/s]",
                 format="%.2f"
             )
 
@@ -240,13 +238,13 @@ def main():
             if converged and v2_numerical is not None:
                 st.success(f"""
                 ✨ Solutions found:
-                - Analytical: v₂ = {v2_analytical:.3f} m/s
-                - Numerical: v₂ = {v2_numerical:.3f} m/s
-                - Relative difference: {abs(v2_analytical - v2_numerical)/v2_analytical*100:.6f}%
+                - Analitik: v₂ = {v2_analytical:.3f} m/s
+                - Numerik (Metode Secant): v₂ = {v2_numerical:.3f} m/s
+                - Error Relatif: {abs(v2_analytical - v2_numerical)/v2_analytical*100:.6f}%
                 """)
 
                 # Create tabs for different visualizations
-                tab1, tab2, tab3 = st.tabs(["Flow Visualization", "Convergence Plot", "Iteration Details"])
+                tab1, tab2, tab3 = st.tabs(["Visualisasi Aliran Fluida", "Grafik Error (konvergensi)", "Detail Iterasi"])
 
                 with tab1:
                     st.pyplot(plot_flow_visualization(h1, h2, v1, v2_numerical))
@@ -266,47 +264,24 @@ def main():
                     st.table(iteration_data)
             else:
                 st.error("""
-                The numerical method did not converge. This might be because:
-                1. The initial guesses are too far from the solution
-                2. The problem might be physically unrealistic
-                3. Numerical instabilities in the calculation
-
-                Try:
-                1. Using the suggested initial guesses
-                2. Making sure your input parameters are physically reasonable
-                3. If you know the approximate answer, use guesses around that value
+                Metode numerik tidak mencapai konvergensi. Hal ini mungkin disebabkan oleh:
+                1.Tebakan awal terlalu jauh dari solusi.
+                2.Masalah yang dianalisis mungkin tidak realistis secara fisika.
+                3.Ketidakstabilan numerik dalam perhitungan.
+                
+                Coba langkah berikut:
+                1.Gunakan tebakan awal yang disarankan.
+                2.Pastikan parameter input yang digunakan masuk akal secara fisika.
+                3.Jika Anda mengetahui perkiraan jawabannya, gunakan tebakan di sekitar nilai tersebut.
                 """)
 
                 # Show analytical solution anyway if available
-                st.info(f"Analytical solution suggests v₂ ≈ {v2_analytical:.3f} m/s")
+                st.info(f"Rekomendasi nilai tebakan untuk v₂ ≈ {v2_analytical:.3f} m/s")
 
         except ValueError as e:
             st.error(f"Error in calculation: {str(e)}")
         except Exception as e:
             st.error(f"An unexpected error occurred: {str(e)}")
-
-    # Help section
-    with st.expander("Help & Information"):
-        st.markdown("""
-        ### About the Solver
-        This application solves for the unknown velocity (v₂) in Bernoulli's equation using both:
-        - Analytical solution (direct formula)
-        - Numerical solution (secant method)
-
-        ### Assumptions
-        - Steady flow
-        - Incompressible fluid
-        - Inviscid flow
-        - Flow along a streamline
-
-        ### Tips for Getting Good Results
-        1. Ensure your input parameters are physically realistic
-        2. For initial guesses, start with values around v₁
-        3. If the solution doesn't converge, try:
-           - Different initial guesses
-           - Checking units (all inputs should be in SI units)
-           - Verifying the physical setup makes sense
-        """)
 
 if __name__ == "__main__":
     main()
