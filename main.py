@@ -3,10 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from bernoulli_solver import bernoulli_equation, secant_method, analytical_solution
 
-st.set_page_config(page_title="Bernoulli Equation Solver", layout="wide")
+st.set_page_config(page_title="Solusi Numerik Persamaan Bernoulli", layout="wide")
 
 def create_equation_section():
-    st.header("Bernoulli's Equation Solver")
+    st.header("Metode Secant untuk Persamaan Bernoulli")
     st.markdown("""
     <style>
     .equation {
@@ -21,23 +21,23 @@ def create_equation_section():
 
     st.markdown("""
     <div class="equation">
-    <h3>Bernoulli's Equation:</h3>
+    <h3>Persamaan Bernoulli:</h3>
     </div>
     """, unsafe_allow_html=True)
 
     st.latex(r"P_1 + \frac{1}{2}\rho v_1^2 + \rho gh_1 = P_2 + \frac{1}{2}\rho v_2^2 + \rho gh_2")
 
     st.markdown("""
-    We're solving for velocity at point 2 ($v_2$) given all other parameters.
+    Menyelesaikan Persamaan Bernoulli untuk mencari kecepatan v pada titik 2 ($v_2$).
     """)
 
 def validate_inputs(P1, P2, rho, g, h1, h2, v1):
     if rho <= 0:
-        return False, "Density must be positive"
+        return False, "Nilai Densitas Harus Positif"
     if v1 < 0:
-        return False, "Velocity must be non-negative"
+        return False, "Kecepatan Harus Positif (non-negative)"
     if P1 < 0 or P2 < 0:
-        return False, "Pressures should typically be positive"
+        return False, "Tekanan harus Positif"
     return True, ""
 
 def suggest_initial_guesses(v1, P1, P2, rho, g, h1, h2):
@@ -50,23 +50,23 @@ def suggest_initial_guesses(v1, P1, P2, rho, g, h1, h2):
 
 def create_input_section():
     with st.container():
-        st.subheader("System Parameters")
+        st.subheader("Parameter Sistem")
 
         # Fluid properties
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown("#### Fluid Properties")
+            st.markdown("#### Sifat Fluida")
             rho = st.number_input(
-                "Fluid Density (ρ) [kg/m³]",
+                "Densitas Fluida (ρ) [kg/m³]",
                 value=1000.0,
                 min_value=0.1,
-                help="Density of the fluid in kilograms per cubic meter [kg/m³]\nExample values:\n- Water: 1000 kg/m³\n- Air: 1.225 kg/m³",
+                help="Massa per satuan volume fluida. [kg/m³]\nContoh:\n- Air: 1000 kg/m³\n- Udara: 1.225 kg/m³",
                 format="%.1f"
             )
         with col2:
             g = 9.81  # gravitational acceleration
             st.markdown("""
-            **Gravitational Acceleration (g)**: 9.81 m/s²
+            **Percepatan Gravitasi (g)**: 9.81 m/s²
             """)
 
         # Point 1 and 2 parameters
@@ -104,7 +104,7 @@ def create_input_section():
             h2 = st.number_input(
                 "Ketinggian pada titik 2 (h₂) [m]",
                 value=1.0,
-                help="Ketinggian pada titik 2 [m],
+                help="Ketinggian pada titik 2 [m]",
                 format="%.2f"
             )
 
