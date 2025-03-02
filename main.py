@@ -117,7 +117,7 @@ def create_input_section():
       ### Metode Secant untuk v₂  
       Metode secant memerlukan dua tebakan awal untuk v₂ [m/s]. Tebakan yang baik membantu nilai error konvergen lebih cepat.  
 
-    #### **Saran hukum fisika:**  
+    #### **Saran secara hukum fisika:**  
     - Berdasarkan hukum kekekalan energi, v₂ seharusnya mirip dengan v₁.  
     - Untuk pipa yang menyempit, v₂ > v₁.  
     - Untuk pipa yang melebar, v₂ < v₁.  
