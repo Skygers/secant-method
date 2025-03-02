@@ -28,7 +28,7 @@ def create_equation_section():
     st.latex(r"P_1 + \frac{1}{2}\rho v_1^2 + \rho gh_1 = P_2 + \frac{1}{2}\rho v_2^2 + \rho gh_2")
 
     st.markdown("""
-    Menyelesaikan Persamaan Bernoulli untuk mencari kecepatan fuida pada titik 2 ($v_2$).
+    Menyelesaikan Persamaan Bernoulli untuk mencari kecepatan fluida pada titik 2 ($v_2$).
     """)
 
 def validate_inputs(P1, P2, rho, g, h1, h2, v1):
@@ -114,16 +114,18 @@ def create_input_section():
     # Numerical method parameters in an expander
     with st.expander("Parameter Metode Secant", expanded=False):
         st.markdown("""
-        Metode secant memerlukan dua tebakan awal untuk v₂ [m/s]. Tebakan yang baik membantu nilai error konvergen lebih cepat..
+      ### Metode Secant untuk v₂  
+      Metode secant memerlukan dua tebakan awal untuk v₂ [m/s]. Tebakan yang baik membantu nilai error konvergen lebih cepat.  
 
-        *** Saran berdasarkan fisika:
-        -Berdasarkan hukum kekekalan energi, v₂ seharusnya mirip dengan v₁.
-        -Untuk pipa yang menyempit, v₂ > v₁.
-        -Untuk pipa yang melebar, v₂ < v₁.
-        
-        Rentang yang direkomendasikan:
-        -Mulailah dengan nilai yang mendekati v₁.
-        -Pastikan perkiraan memiliki jarak yang cukup masuk akal.
+    #### **Saran berdasarkan fisika:**  
+    - Berdasarkan hukum kekekalan energi, v₂ seharusnya mirip dengan v₁.  
+    - Untuk pipa yang menyempit, v₂ > v₁.  
+    - Untuk pipa yang melebar, v₂ < v₁.  
+
+    #### **Rentang yang direkomendasikan:**  
+    - Mulailah dengan nilai yang mendekati v₁.  
+    - Pastikan perkiraan memiliki jarak yang cukup masuk akal.  
+
         """)
 
         col1, col2 = st.columns(2)
