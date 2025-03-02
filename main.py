@@ -117,7 +117,7 @@ def create_input_section():
       ### Metode Secant untuk v₂  
       Metode secant memerlukan dua tebakan awal untuk v₂ [m/s]. Tebakan yang baik membantu nilai error konvergen lebih cepat.  
 
-    #### **Saran berdasarkan fisika:**  
+    #### **Saran hukum fisika:**  
     - Berdasarkan hukum kekekalan energi, v₂ seharusnya mirip dengan v₁.  
     - Untuk pipa yang menyempit, v₂ > v₁.  
     - Untuk pipa yang melebar, v₂ < v₁.  
@@ -238,7 +238,7 @@ def main():
 
             if converged and v2_numerical is not None:
                 st.success(f"""
-                ✨ Solutions found:
+                ✨ Solusi didapatkan:
                 - Analitik: v₂ = {v2_analytical:.3f} m/s
                 - Numerik (Metode Secant): v₂ = {v2_numerical:.3f} m/s
                 - Error Relatif: {abs(v2_analytical - v2_numerical)/v2_analytical*100:.6f}%
@@ -265,15 +265,18 @@ def main():
                     st.table(iteration_data)
             else:
                 st.error("""
-                Metode numerik tidak mencapai konvergensi. Hal ini mungkin disebabkan oleh:
-                1.Tebakan awal terlalu jauh dari solusi.
-                2.Masalah yang dianalisis mungkin tidak realistis secara fisika.
-                3.Ketidakstabilan numerik dalam perhitungan.
-                
-                Coba langkah berikut:
-                1.Gunakan tebakan awal yang disarankan.
-                2.Pastikan parameter input yang digunakan masuk akal secara fisika.
-                3.Jika Anda mengetahui perkiraan jawabannya, gunakan tebakan di sekitar nilai tersebut.
+            ### Metode Numerik Tidak Mencapai Konvergensi  
+
+            Hal ini mungkin disebabkan oleh:  
+            1. Tebakan awal terlalu jauh dari solusi.  
+            2. Masalah yang dianalisis mungkin tidak realistis secara fisika.  
+            3. Ketidakstabilan numerik dalam perhitungan.  
+
+            #### **Coba langkah berikut:**  
+            1. Gunakan tebakan awal yang disarankan.  
+            2. Pastikan parameter input yang digunakan masuk akal secara fisika.  
+            3. Jika Anda mengetahui perkiraan jawabannya, gunakan tebakan di sekitar nilai tersebut.  
+
                 """)
 
                 # Show analytical solution anyway if available
